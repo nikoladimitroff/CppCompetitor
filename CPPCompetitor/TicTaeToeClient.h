@@ -104,12 +104,12 @@ class ITicTaeToeClient
 public:
 	virtual void SetIsGoingFirst(bool goesFirst)
 	{
-		this->symbol = static_cast<TicTaeToeCell>(goesFirst + 1);
+		this->m_Symbol = static_cast<TicTaeToeCell>(goesFirst + 1);
 	}
 	virtual TicTaeToeTurn NextTurn(const TicTaeToeBoard& board) = 0;
 	virtual std::string GetName() const = 0;
 protected:
-	TicTaeToeCell symbol;
+	TicTaeToeCell m_Symbol;
 };
 
 class NextFielder : public ITicTaeToeClient
@@ -132,11 +132,11 @@ public:
 			{
 				if (board.Board[i][j] == TicTaeToeCell::Empty)
 				{
-					return TicTaeToeTurn(static_cast<unsigned short>(i), static_cast<unsigned short>(j), symbol);
+					return TicTaeToeTurn(static_cast<unsigned short>(i), static_cast<unsigned short>(j), m_Symbol);
 				}
 			}
 		}
-		return TicTaeToeTurn(static_cast<unsigned short>(-1), static_cast<unsigned short>(-1), symbol);
+		return TicTaeToeTurn(static_cast<unsigned short>(-1), static_cast<unsigned short>(-1), m_Symbol);
 	}
 	virtual std::string GetName() const override
 	{
@@ -155,7 +155,7 @@ public:
 	}
 	virtual TicTaeToeTurn NextTurn(const TicTaeToeBoard& board) override
 	{
-		return TicTaeToeTurn(TicTaeToeBoard::BoardLength - 1, this->colCounter++, this->symbol);
+		return TicTaeToeTurn(TicTaeToeBoard::BoardLength - 1, this->colCounter++, this->m_Symbol);
 	}
 	virtual std::string GetName() const override
 	{
